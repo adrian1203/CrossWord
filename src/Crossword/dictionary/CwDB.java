@@ -10,6 +10,12 @@ public class CwDB  {
     createDB(filename);
 
     }
+
+    /**
+     * Tworzenie nowego obiektu i dodawanie go (haslo i klucz)
+     * @param word haslo
+     * @param clue klucz
+     */
     public void add(String word, String clue){
         Entry tmp=new Entry(word, clue);
         this.dict.addFirst(new Entry(word,clue));
@@ -21,6 +27,12 @@ public class CwDB  {
     public int getSize(){
         return 1;
     }
+
+    /**
+     * Tworzenie bazy pytań i haseł na podstawie pliku txt
+     * @param filename ścieżka do pliku
+     * @throws IOException
+     */
     protected void createDB(String filename)throws IOException{
         BufferedReader br=new BufferedReader(new FileReader(filename));
         String tmp=br.readLine();
@@ -31,8 +43,5 @@ public class CwDB  {
         }while((tmp=br.readLine())!=null);
         br.close();
     }
-    public void Print(){
-        for(Entry x:dict)
-        System.out.println(x.getClue()+"    "+x.getWord());
-    }
+
 }

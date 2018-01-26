@@ -13,29 +13,53 @@ public class Board {
     private int y;
     public LinkedList<String> clue = new LinkedList<String>();
 
+    /**
+     * Konstruktor
+     * @param x wymiary planszy
+     * @param y wymiary planszy
+     */
     public Board(int x, int y) {
         board = new String[x][y];
         this.x = x;
         this.y = y;
     }
 
+    /**
+     * metoda do dalszeo rozwoju
+     * @return
+     */
     public int getWidth() {
         return this.x;
     }
-
+    /**
+     * metoda do dalszeo rozwoju
+     * @return
+     */
     public int getHeight() {
         return this.y;
     }
-
+    /**
+     * metoda do dalszeo rozwoju
+     * @return
+     */
     public String getCell(int x, int y) {
         return board[x][y];
     }
-
+    /**
+     * metoda ustawia komórkę
+     * @return
+     */
     public void setCell(int x, int y, String c) {
         board[x][y] = c;
     }
 
-    //public LinkedList<BoardCell> getStartCells(){}
+    /**
+     * Metoda budująca planszę krzyżówki, zepewnia całą logikę krzyżówki
+     * Pierwsza iteracja po kolumnach krzyżówki, następnie po wierszach
+     * podczas dugirj iteracji dopasowywane są hasła, do wolnych miejsc planszy
+     * Wykorzystuje metody z klasy InteliCwDb, do znajdowanie haseł
+     * @throws IOException
+     */
     public void createBoard() throws IOException {
         InteliCwDB inteliCwDB = new InteliCwDB("C:/Users/Adrian/Desktop/cwdb.txt");
         int cluenumber = 0;
@@ -71,6 +95,13 @@ public class Board {
         }
     }
 
+    /**
+     * Wstawianie hasła poziomwego do krzyżówki
+     * @param tab tablicach charów
+     * @param x  od
+     * @param y  do na planszy
+     * @param number numer hasła
+     */
     public void insertWordHorizon(char[] tab, int x, int y, int number) {
         int i = 1;
         setCell(x, y, String.valueOf(number + "."));
@@ -81,6 +112,13 @@ public class Board {
 
     }
 
+    /**
+     * Wstawianie hasła poziomwego do krzyżówki
+     * @param tab tablicach charów
+     * @param x  od
+     * @param y  do na planszy
+     * @param number numer hasła
+     */
     public void insertWordVer(char[] tab, int x, int y, int number) {
         int i = 1;
         setCell(x, y, String.valueOf(number + "."));
@@ -91,30 +129,15 @@ public class Board {
 
     }
 
-    public void printAll() {
-        for (int i = 0; i < this.y; i++) {
-            for (int j = 0; j < this.x; j++) {
-                if (board[i][j] == null) {
-                    System.out.print(" ");
-                } else {
-                    if (board[i][j].length() == 2) {
-                        System.out.print(board[i][j] + "");
-                    } else {
-                        System.out.print(board[i][j] + " ");
-                    }
 
-                }
 
-            }
-            System.out.println("");
-        }
-        int numer = 1;
-        for (String x : clue) {
-            System.out.println(numer + ": " + x);
-            numer++;
-        }
-    }
-
+    /**
+     * Tworzenie wyrażenia regularnego pasującego do planszy krzyżowki, gdzie wstawiamy hasło
+     * @param fromy od
+     * @param toy do
+     * @param x numer wiersza
+     * @return wzorzec
+     */
     String createPattern(int fromy, int toy, int x) {
         String tmp = "^";
         for (int i = fromy+1; i < toy - fromy; i++) {

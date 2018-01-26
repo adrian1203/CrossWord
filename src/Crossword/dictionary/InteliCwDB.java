@@ -12,6 +12,11 @@ public class InteliCwDB extends CwDB {
         //System.out.print("Konstruktor pochodny");
     }
 
+    /**
+     * Znajdowanie wszytskich haseł pasujących to wzorca
+     * @param pattern
+     * @return
+     */
     public LinkedList<Entry> findAll(String pattern) {
         Pattern pat = Pattern.compile(pattern);
         LinkedList<Entry> list = new LinkedList<Entry>();
@@ -24,6 +29,10 @@ public class InteliCwDB extends CwDB {
         return list;
     }
 
+    /**
+     * Losowe wyszukiwanie hasła, brak jakich kolwiek narzuconych wymiarów
+     * @return
+     */
     public Entry getRandom() {
         Random generator = new Random();
         int i=generator.nextInt(dict.size());
@@ -32,6 +41,11 @@ public class InteliCwDB extends CwDB {
 
     ;
 
+    /**
+     * Losowe szukania hasła, dla zadanej długości
+     * @param lenght dlugość hasła
+     * @return wzraca hasło
+     */
     public Entry getRandom(int lenght) {
         LinkedList<Entry> list = new LinkedList<Entry>();
         for (Entry x : this.dict) {
@@ -44,6 +58,12 @@ public class InteliCwDB extends CwDB {
         return list.get(i);
 
     }
+
+    /**
+     * Losowe szukanie haslła, które jest jest nie dłuższe niż zadana długość
+     * @param lenght max długość hasła
+     * @return zwraca hasło
+     */
     public Entry getRandomLessThen(int lenght) {
         LinkedList<Entry> list = new LinkedList<Entry>();
         for (Entry x : this.dict) {
@@ -59,6 +79,11 @@ public class InteliCwDB extends CwDB {
 
     ;
 
+    /**
+     * Losowe wyszukiwanie hasła pasującego to zadanego wzorca
+     * @param pattern zadany wzorzec hasła
+     * @return zwraca hasło
+     */
     public Entry getRandom(String pattern) {
         LinkedList<Entry> list=new LinkedList<Entry>();
         list=findAll(pattern);

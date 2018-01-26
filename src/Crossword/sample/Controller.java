@@ -30,7 +30,12 @@ public class Controller {
     public int b=0;
     public TextField SetXY;
 
-
+    /**
+     * Tworzenie planszy krzyżówki w GUI
+     * na podstawie strategi w CreateBoard
+     * @param actionEvent
+     * @throws IOException
+     */
     public void create(ActionEvent actionEvent) throws IOException {
         if(!SetXY.getText().isEmpty()){
             a=Integer.parseInt(SetXY.getText());
@@ -41,7 +46,6 @@ public class Controller {
         }
         board = new Board(a, b);
         board.createBoard();
-        board.printAll();
         Labels = new Label[a][b];
         for (int i = 0; i < a; i++) {
             for (int j = 0; j < b; j++) {
@@ -80,8 +84,11 @@ public class Controller {
         }
     }
 
+    /**
+     * Wyświetlanie haseł krzyżówki w GUI
+     * @param actionEvent
+     */
     public void check(ActionEvent actionEvent) {
-        // System.out.println(board.board[3][3]);
         for (int i = 0; i < a; i++) {
             for (int j = 0; j < b; j++) {
                 if (board.board[i][j] != null) {

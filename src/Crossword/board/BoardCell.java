@@ -1,5 +1,7 @@
 package Crossword.board;
-
+/**
+ * Klasa i jej metody do dlaszego rozwoju ;)
+ */
 public class BoardCell {
     BoardCell(){
         this.content=null;
