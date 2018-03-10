@@ -4,14 +4,16 @@ import Crossword.board.Board;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.awt.*;
-import java.io.IOException;
+import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,33 +22,47 @@ public class Controller {
 
     public TextField text1;
     public Button start;
-    public Label[][] Labels;
+    public Label[][] labels;
     public Pane panel;
     public Label labe;
     public ListView listbooks;
     public Button checkButton;
     public Board board;
-    public int a=0;
-    public int b=0;
+    public int a = 0;
+    public int b = 0;
     public TextField SetXY;
+    public Button chooseFileButton;
+    public Button openButton;
+    public Button saveButton;
+    public Button printButton;
+    public Button solveButton;
+    public Spinner<Integer> heightBordSpinner;
+    public Spinner<Integer> widthBordSpinner;
+    public File fileWithKey;
+    public File fileWithBoard;
+    public boolean wascreated;
+    public TextField pathFileField;
 
-    /**
-     * Tworzenie planszy krzyżówki w GUI
-     * na podstawie strategi w CreateBoard
-     * @param actionEvent
-     * @throws IOException
-     */
-    public void create(ActionEvent actionEvent) throws IOException {
-        if(!SetXY.getText().isEmpty()){
-            a=Integer.parseInt(SetXY.getText());
-            b=Integer.parseInt(SetXY.getText());
-        }else{
-            a=12;
-            b=12;
+
+    public void initialize() {
+        SpinnerValueFactory<Integer> valueFactorywith = //
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(8, 25, 15);
+        SpinnerValueFactory<Integer> valueFactoryheight = //
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(8, 25, 15);
+        widthBordSpinner.setValueFactory(valueFactorywith);
+        heightBordSpinner.setValueFactory(valueFactoryheight);
+        //pathFileField.setStyle("-fx-display-caret: false;");
+    }
+
+    public void createBoardLabels() {
+        if (wascreated) {
+            for (int i = 0; i < a; i++) {
+                for (int j = 0; j < b; j++) {
+                    labels[i][j].setVisible(false);
+                }
+            }
         }
-        board = new Board(a, b);
-        board.createBoard();
-        Labels = new Label[a][b];
+        labels = new Label[a][b];
         for (int i = 0; i < a; i++) {
             for (int j = 0; j < b; j++) {
                 Label label = new Label();
@@ -65,7 +81,7 @@ public class Controller {
                         label.setText("  ");
                     }
                 }
-                Labels[i][j] = label;
+                labels[i][j] = label;
                 panel.getChildren().add(label);
                 listbooks.getItems().clear();
                 List<String> list = new LinkedList<>();
@@ -78,14 +94,34 @@ public class Controller {
                 listbooks.setVisible(true);
                 listbooks.setItems(itms);
                 checkButton.setVisible(true);
-
-
+                wascreated = true;
             }
         }
     }
 
     /**
+     * Tworzenie planszy krzyżówki w GUI
+     * na podstawie strategi w CreateBoard
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
+
+    public void create(ActionEvent actionEvent) throws IOException {
+
+        a = widthBordSpinner.getValue();
+        b = heightBordSpinner.getValue();
+        board = new Board(a, b);
+        board.createBoard(fileWithKey);
+        createBoardLabels();
+
+
+    }
+
+
+    /**
      * Wyświetlanie haseł krzyżówki w GUI
+     *
      * @param actionEvent
      */
     public void check(ActionEvent actionEvent) {
@@ -93,11 +129,47 @@ public class Controller {
             for (int j = 0; j < b; j++) {
                 if (board.board[i][j] != null) {
                     if (!board.board[i][j].matches("\\d.*")) {
-                        Labels[i][j].setText(" " + board.board[i][j]);
+                        labels[i][j].setText(" " + board.board[i][j]);
                     }
 
                 }
             }
         }
+    }
+
+    public void chooseFile(ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Wybierz plik z hasłem");
+        fileWithKey = fileChooser.showOpenDialog(new Stage());
+        pathFileField.setText(fileWithKey.getAbsolutePath());
+
+
+    }
+
+    public void open(ActionEvent actionEvent) throws IOException, ClassNotFoundException {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Wybierz plik z krzyżówką");
+        fileWithBoard = fileChooser.showOpenDialog(new Stage());
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileWithBoard.getAbsolutePath()));
+        board = (Board) in.readObject();
+        widthBordSpinner.setValueFactory( new SpinnerValueFactory.IntegerSpinnerValueFactory(8, 25, board.getWidth()));
+        heightBordSpinner.setValueFactory( new SpinnerValueFactory.IntegerSpinnerValueFactory(8, 25, board.getHeight()));
+        createBoardLabels();
+
+    }
+
+    public void save(ActionEvent actionEvent) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Board", "*.board");
+        fileChooser.getExtensionFilters().add(extFilter);
+        File file = fileChooser.showSaveDialog(new Stage());
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file.getAbsolutePath()));
+        out.writeObject(board);
+    }
+
+    public void print(ActionEvent actionEvent) {
+    }
+
+    public void solve(ActionEvent actionEvent) {
     }
 }

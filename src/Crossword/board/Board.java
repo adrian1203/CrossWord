@@ -3,11 +3,13 @@ package Crossword.board;
 import Crossword.dictionary.Entry;
 import Crossword.dictionary.InteliCwDB;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.Random;
 
-public class Board {
+public class Board implements Serializable {
     public String[][] board;
     private int x;
     private int y;
@@ -60,8 +62,8 @@ public class Board {
      * Wykorzystuje metody z klasy InteliCwDb, do znajdowanie haseł
      * @throws IOException
      */
-    public void createBoard() throws IOException {
-        InteliCwDB inteliCwDB = new InteliCwDB("C:/Users/Adrian/Desktop/cwdb.txt");
+    public void createBoard(File file) throws IOException {
+        InteliCwDB inteliCwDB = new InteliCwDB(file.getAbsolutePath());
         int cluenumber = 0;
         int random=0;
         for (int i = 1; i < this.y; i=i+2) {
@@ -150,4 +152,5 @@ public class Board {
 
         return tmp;
     }
+
 }
