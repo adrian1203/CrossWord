@@ -130,9 +130,6 @@ public class Board implements Serializable {
         }
 
     }
-
-
-
     /**
      * Tworzenie wyrażenia regularnego pasującego do planszy krzyżowki, gdzie wstawiamy hasło
      * @param fromy od

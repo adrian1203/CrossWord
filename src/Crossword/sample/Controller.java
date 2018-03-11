@@ -4,6 +4,9 @@ import Crossword.board.Board;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.print.Printer;
+import javafx.print.PrinterJob;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.awt.*;
 import java.io.*;
@@ -40,8 +44,9 @@ public class Controller {
     public Spinner<Integer> widthBordSpinner;
     public File fileWithKey;
     public File fileWithBoard;
-    public boolean wascreated;
+    public boolean wascreated=false;
     public TextField pathFileField;
+    public Pane panelBoard;
 
 
     public void initialize() {
@@ -51,10 +56,8 @@ public class Controller {
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(8, 25, 15);
         widthBordSpinner.setValueFactory(valueFactorywith);
         heightBordSpinner.setValueFactory(valueFactoryheight);
-        //pathFileField.setStyle("-fx-display-caret: false;");
     }
-
-    public void createBoardLabels() {
+    public void clearBoard(){
         if (wascreated) {
             for (int i = 0; i < a; i++) {
                 for (int j = 0; j < b; j++) {
@@ -62,12 +65,14 @@ public class Controller {
                 }
             }
         }
+    }
+    public void createBoardLabels() {
         labels = new Label[a][b];
         for (int i = 0; i < a; i++) {
             for (int j = 0; j < b; j++) {
                 Label label = new Label();
-                label.setLayoutX(40 + j * 25);
-                label.setLayoutY(80 + i * 25);
+                label.setLayoutX(5 + j * 25);
+                label.setLayoutY(5 + i * 25);
                 label.setPrefWidth(25);
                 label.setPrefHeight(25);
                 if (board.board[i][j] == null) {
@@ -82,7 +87,7 @@ public class Controller {
                     }
                 }
                 labels[i][j] = label;
-                panel.getChildren().add(label);
+                panelBoard.getChildren().add(label);
                 listbooks.getItems().clear();
                 List<String> list = new LinkedList<>();
                 int number = 1;
@@ -93,7 +98,6 @@ public class Controller {
                 ObservableList<String> itms = FXCollections.observableArrayList(list);
                 listbooks.setVisible(true);
                 listbooks.setItems(itms);
-                checkButton.setVisible(true);
                 wascreated = true;
             }
         }
@@ -108,7 +112,7 @@ public class Controller {
      */
 
     public void create(ActionEvent actionEvent) throws IOException {
-
+        clearBoard();
         a = widthBordSpinner.getValue();
         b = heightBordSpinner.getValue();
         board = new Board(a, b);
@@ -118,24 +122,6 @@ public class Controller {
 
     }
 
-
-    /**
-     * Wyświetlanie haseł krzyżówki w GUI
-     *
-     * @param actionEvent
-     */
-    public void check(ActionEvent actionEvent) {
-        for (int i = 0; i < a; i++) {
-            for (int j = 0; j < b; j++) {
-                if (board.board[i][j] != null) {
-                    if (!board.board[i][j].matches("\\d.*")) {
-                        labels[i][j].setText(" " + board.board[i][j]);
-                    }
-
-                }
-            }
-        }
-    }
 
     public void chooseFile(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
@@ -152,8 +138,12 @@ public class Controller {
         fileWithBoard = fileChooser.showOpenDialog(new Stage());
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileWithBoard.getAbsolutePath()));
         board = (Board) in.readObject();
-        widthBordSpinner.setValueFactory( new SpinnerValueFactory.IntegerSpinnerValueFactory(8, 25, board.getWidth()));
-        heightBordSpinner.setValueFactory( new SpinnerValueFactory.IntegerSpinnerValueFactory(8, 25, board.getHeight()));
+        clearBoard();
+        a=board.getWidth();
+        b=board.getHeight();
+        widthBordSpinner.setValueFactory( new SpinnerValueFactory.IntegerSpinnerValueFactory(8, 25, a));
+        heightBordSpinner.setValueFactory( new SpinnerValueFactory.IntegerSpinnerValueFactory(8, 25, b));
+
         createBoardLabels();
 
     }
@@ -168,8 +158,18 @@ public class Controller {
     }
 
     public void print(ActionEvent actionEvent) {
-    }
 
+    }
     public void solve(ActionEvent actionEvent) {
+        for (int i = 0; i < a; i++) {
+            for (int j = 0; j < b; j++) {
+                if (board.board[i][j] != null) {
+                    if (!board.board[i][j].matches("\\d.*")) {
+                        labels[i][j].setText(" " + board.board[i][j]);
+                    }
+
+                }
+            }
+        }
     }
 }

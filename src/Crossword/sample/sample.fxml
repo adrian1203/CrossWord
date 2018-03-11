@@ -22,7 +22,6 @@
       <Pane fx:id="panel" prefHeight="700.0" prefWidth="1000.0">
          <children>
             <ListView fx:id="listbooks" layoutX="454.0" layoutY="80.0" prefHeight="448.0" prefWidth="421.0" visible="false" />
-            <Button fx:id="checkButton" layoutX="428.0" layoutY="14.0" mnemonicParsing="false" onAction="#check" prefHeight="34.0" prefWidth="128.0" text="Pokaż rozwiązanie" visible="false" />
             <ToolBar layoutX="243.0" layoutY="17.0" prefHeight="54.0" prefWidth="344.0">
               <items>
                   <TextField fx:id="pathFileField" prefHeight="31.0" prefWidth="178.0" promptText="Wybierz ścieżke do pliku" />
@@ -46,6 +45,7 @@
                   <Spinner fx:id="widthBordSpinner" initialValue="15" prefHeight="25.0" prefWidth="51.0" />
               </items>
             </ToolBar>
+            <Pane fx:id="panelBoard" layoutX="31.0" layoutY="120.0" prefHeight="460.0" prefWidth="421.0" />
          </children>
       </Pane>
    </children>
