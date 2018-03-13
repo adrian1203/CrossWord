@@ -29,12 +29,13 @@
                   <Button fx:id="createButton" mnemonicParsing="false" onAction="#create" prefHeight="34.0" prefWidth="116.0" text="Generuj krzyżówkę" />
               </items>
             </ToolBar>
-            <ToolBar layoutX="599.0" layoutY="17.0" prefHeight="54.0" prefWidth="385.0">
+            <ToolBar layoutX="592.0" layoutY="17.0" prefHeight="54.0" prefWidth="403.0">
               <items>
-                <Button fx:id="openButton" mnemonicParsing="false" onAction="#open" prefHeight="34.0" prefWidth="90.0" text="Otwórz" />
-                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="#save" prefHeight="34.0" prefWidth="90.0" text="Zapisz" />
-                  <Button fx:id="printButton" mnemonicParsing="false" onAction="#print" prefHeight="34.0" prefWidth="90.0" text="Drukuj" />
-                  <Button fx:id="solveButton" mnemonicParsing="false" onAction="#solve" prefHeight="34.0" prefWidth="90.0" text="Rozwiąż" />
+                <Button fx:id="openButton" mnemonicParsing="false" onAction="#open" prefHeight="34.0" prefWidth="74.0" text="Otwórz" />
+                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="#save" prefHeight="34.0" prefWidth="74.0" text="Zapisz" />
+                  <Button fx:id="pdfButton" mnemonicParsing="false" onAction="#pdfCreate" prefHeight="34.0" prefWidth="74.0" text="PDF" />
+                  <Button fx:id="printButton" mnemonicParsing="false" onAction="#print" prefHeight="34.0" prefWidth="74.0" text="Drukuj" />
+                  <Button fx:id="solveButton" mnemonicParsing="false" onAction="#solve" prefHeight="34.0" prefWidth="74.0" text="Rozwiąż" />
               </items>
             </ToolBar>
             <ToolBar layoutX="14.0" layoutY="17.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="54.0" prefWidth="217.0">

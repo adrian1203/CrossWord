@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -47,6 +48,7 @@ public class Controller {
     public boolean wascreated=false;
     public TextField pathFileField;
     public Pane panelBoard;
+    public Button pdfButton;
 
 
     public void initialize() {
@@ -159,6 +161,7 @@ public class Controller {
 
     public void print(ActionEvent actionEvent) {
 
+
     }
     public void solve(ActionEvent actionEvent) {
         for (int i = 0; i < a; i++) {
@@ -171,5 +174,8 @@ public class Controller {
                 }
             }
         }
+    }
+
+    public void pdfCreate(ActionEvent actionEvent) {
     }
 }
