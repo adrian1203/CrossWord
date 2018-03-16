@@ -1,17 +1,20 @@
 package Crossword.board;
+
 /**
  * Klasa i jej metody do dlaszego rozwoju ;)
  */
 public class BoardCell {
-    BoardCell(){
-        this.content=null;
+    BoardCell() {
+        this.content = null;
     }
+
     private String content;
 
-    public void setConntent(String content){
-        this.content=content;
+    public void setConntent(String content) {
+        this.content = content;
     }
-    public String getContent(){
+
+    public String getContent() {
         return content;
     }
 

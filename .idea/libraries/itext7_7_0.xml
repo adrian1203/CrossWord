@@ -3,6 +3,7 @@
     <CLASSES>
       <root url="file://$USER_HOME$/Downloads/itex/itext7-7.0.2" />
       <root url="file://$USER_HOME$/Downloads/itextpdf-5.1.0.jar" />
+      <root url="jar://$USER_HOME$/Downloads/pdfbox-app-2.0.8.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
