@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane alignment="center" hgap="10" prefHeight="680.0" prefWidth="1200.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Crossword.sample.Controller">
+<GridPane alignment="center" hgap="10" prefHeight="680.0" prefWidth="1200.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Crossword.aplication.Controller">
    <columnConstraints>
       <ColumnConstraints />
    </columnConstraints>
@@ -33,13 +33,12 @@
                   <Button fx:id="createButton" mnemonicParsing="false" onAction="#create" prefHeight="34.0" prefWidth="116.0" text="Generuj krzyżówkę" />
               </items>
             </ToolBar>
-            <ToolBar layoutX="697.0" layoutY="17.0" prefHeight="54.0" prefWidth="403.0">
+            <ToolBar layoutX="697.0" layoutY="17.0" prefHeight="54.0" prefWidth="415.0">
               <items>
-                <Button fx:id="openButton" mnemonicParsing="false" onAction="#open" prefHeight="34.0" prefWidth="74.0" text="Otwórz" />
-                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="#save" prefHeight="34.0" prefWidth="74.0" text="Zapisz" />
-                  <Button fx:id="pdfButton" mnemonicParsing="false" onAction="#pdfCreate" prefHeight="34.0" prefWidth="74.0" text="Zapisz PDF" />
-                  <Button fx:id="printButton" mnemonicParsing="false" onAction="#print" prefHeight="34.0" prefWidth="74.0" text="Drukuj" />
-                  <Button fx:id="solveButton" mnemonicParsing="false" onAction="#solve" prefHeight="34.0" prefWidth="74.0" text="Rozwiąż" />
+                <Button fx:id="openButton" mnemonicParsing="false" onAction="#open" prefHeight="34.0" prefWidth="95.0" text="Otwórz" />
+                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="#save" prefHeight="34.0" prefWidth="95.0" text="Zapisz" />
+                  <Button fx:id="pdfButton" mnemonicParsing="false" onAction="#pdfCreate" prefHeight="34.0" prefWidth="95.0" text="Zapisz PDF" />
+                  <Button fx:id="solveButton" mnemonicParsing="false" onAction="#solve" prefHeight="34.0" prefWidth="95.0" text="Rozwiąż" />
               </items>
             </ToolBar>
             <ToolBar layoutX="100.0" layoutY="17.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="54.0" prefWidth="217.0">

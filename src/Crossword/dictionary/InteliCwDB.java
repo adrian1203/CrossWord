@@ -1,6 +1,6 @@
 package Crossword.dictionary;
 
-import Crossword.excetion.FileWithEntryException;
+import Crossword.exception.FileWithEntryException;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -11,15 +11,9 @@ import java.util.regex.*;
 public class InteliCwDB extends CwDB {
     public InteliCwDB(String filename) throws IOException, FileWithEntryException {
         super(filename);
-        //System.out.print("Konstruktor pochodny");
     }
 
-    /**
-     * Znajdowanie wszytskich haseł pasujących to wzorca
-     *
-     * @param pattern
-     * @return
-     */
+
     public LinkedList<Entry> findAll(String pattern) {
         Pattern pat = Pattern.compile(pattern);
         LinkedList<Entry> list = new LinkedList<Entry>();
@@ -32,11 +26,7 @@ public class InteliCwDB extends CwDB {
         return list;
     }
 
-    /**
-     * Losowe wyszukiwanie hasła, brak jakich kolwiek narzuconych wymiarów
-     *
-     * @return
-     */
+
     public Entry getRandom() {
         Random generator = new Random();
         int i = generator.nextInt(dict.size());
@@ -45,12 +35,7 @@ public class InteliCwDB extends CwDB {
 
     ;
 
-    /**
-     * Losowe szukania hasła, dla zadanej długości
-     *
-     * @param lenght dlugość hasła
-     * @return wzraca hasło
-     */
+
     public Entry getRandom(int lenght) {
         LinkedList<Entry> list = new LinkedList<Entry>();
         for (Entry x : this.dict) {
@@ -66,12 +51,7 @@ public class InteliCwDB extends CwDB {
 
     }
 
-    /**
-     * Losowe szukanie haslła, które jest jest nie dłuższe niż zadana długość
-     *
-     * @param lenght max długość hasła
-     * @return zwraca hasło
-     */
+
     public Entry getRandomLessThen(int lenght) {
         LinkedList<Entry> list = new LinkedList<Entry>();
         for (Entry x : this.dict) {
@@ -89,12 +69,7 @@ public class InteliCwDB extends CwDB {
 
     ;
 
-    /**
-     * Losowe wyszukiwanie hasła pasującego to zadanego wzorca
-     *
-     * @param pattern zadany wzorzec hasła
-     * @return zwraca hasło
-     */
+
     public Entry getRandom(String pattern) {
         LinkedList<Entry> list = new LinkedList<Entry>();
         list = findAll(pattern);
@@ -110,19 +85,7 @@ public class InteliCwDB extends CwDB {
     public void add(String word, String clue) {
         Entry tmp = new Entry(word, clue);
         this.dict.add(new Entry(word, clue));
-       /* int i=0;
-        if(dict.size()==0){
-            this.dict.add(tmp);
-        }
-        for(Entry x:dict){
-            System.out.println(x.compareTo(tmp));
-            if(x.compareTo(tmp)<=0){
-                this.dict.add(i,tmp);
-                i++;
-            }
 
-            //System.out.println(i);
-        }*/
         Collections.sort(dict);
     }
 

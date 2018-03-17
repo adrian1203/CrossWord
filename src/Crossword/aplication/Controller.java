@@ -1,55 +1,36 @@
-package Crossword.sample;
+package Crossword.aplication;
 
 import Crossword.board.Board;
-import Crossword.excetion.FileWithEntryException;
-import com.itextpdf.kernel.color.Lab;
+import Crossword.exception.FileWithEntryException;
+import Crossword.pdfDocument.PDFConverter;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableSet;
 import javafx.event.ActionEvent;
-import javafx.print.*;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
-import javax.swing.text.Document;
-import java.awt.*;
 import java.io.*;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import org.apache.pdfbox.*;
-import org.apache.pdfbox.pdmodel.PDDocument;
+
 
 public class Controller {
 
-
-    public TextField text1;
-    public Button start;
     public Label[][] labels;
     public Pane panel;
-    public Label labe;
     public ListView listbooks;
-    public Button checkButton;
     public Board board;
     public int a = 0;
     public int b = 0;
-    public TextField SetXY;
     public Button chooseFileButton;
     public Button openButton;
     public Button saveButton;
-    public Button printButton;
     public Button solveButton;
     public Spinner<Integer> heightBordSpinner;
     public Spinner<Integer> widthBordSpinner;
@@ -60,7 +41,6 @@ public class Controller {
     public Pane panelBoard;
     public Button pdfButton;
     public Alert alert;
-    public Pane paneWithClue;
 
 
     public void initialize() {
@@ -96,8 +76,8 @@ public class Controller {
         for (int i = 0; i < a; i++) {
             for (int j = 0; j < b; j++) {
                 Label label = new Label();
-                label.setLayoutX(250-(b*12)+5 + (j * 25));
-                label.setLayoutY(250-(a*12)+5 + (i * 25));
+                label.setLayoutX(250 - (b * 12) + 5 + (j * 25));
+                label.setLayoutY(250 - (a * 12) + 5 + (i * 25));
                 label.setPrefWidth(25);
                 label.setPrefHeight(25);
                 if (board.board[i][j] == null) {
@@ -130,21 +110,13 @@ public class Controller {
         }
     }
 
-    /**
-     * Tworzenie planszy krzyżówki w GUI
-     * na podstawie strategi w CreateBoard
-     *
-     * @param actionEvent
-     * @throws IOException
-     */
-
-    public void create(ActionEvent actionEvent)  {
+    public void create(ActionEvent actionEvent) {
         if (pathFileField.getText().equals("")) {
             showAlert("Brak wybranego pliku", "Wybierz plik zawierający hasła do krzyżówki");
             return;
         }
-        fileWithKey=new File(pathFileField.getText());
-        if(!fileWithKey.isFile()){
+        fileWithKey = new File(pathFileField.getText());
+        if (!fileWithKey.isFile()) {
             showAlert("Nie można otworzyć wybranego pliku", "Wybierz poprawny plik zawierający hasła do krzyżówki");
             return;
         }
@@ -154,15 +126,13 @@ public class Controller {
         board = new Board(a, b);
         try {
             board.createBoard(fileWithKey);
-        }
-       catch (IOException e0){
+        } catch (IOException e0) {
             showAlert("Nie można otworzyć wybranego pliku", "Wybierz poprawny plik zawierający hasła do krzyżówki");
             return;
-       }
-       catch (FileWithEntryException e){
-           showAlert("Błędne dane w pliku", "Wybierz poprawny plik zawierający hasła do krzyżówki");
-           return;
-       }
+        } catch (FileWithEntryException e) {
+            showAlert("Błędne dane w pliku", "Wybierz poprawny plik zawierający hasła do krzyżówki");
+            return;
+        }
 
         createBoardLabels();
 
@@ -174,7 +144,7 @@ public class Controller {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Wybierz plik z hasłem");
         fileWithKey = fileChooser.showOpenDialog(new Stage());
-        if(fileWithKey==null){
+        if (fileWithKey == null) {
             return;
         }
         pathFileField.setText(fileWithKey.getAbsolutePath());
@@ -207,7 +177,7 @@ public class Controller {
 
     }
 
-    public void save(ActionEvent actionEvent)  {
+    public void save(ActionEvent actionEvent) {
         if (wascreated == false) {
             showAlert("Brak krzyżówki do zapisu", "Stwórz lub otwórz krzyżówkę");
             return;
@@ -222,17 +192,12 @@ public class Controller {
         try {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file.getAbsolutePath()));
             out.writeObject(board);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             showAlert("Bład zapisu pliku", "Spróbuj jeszcze raz");
         }
 
     }
 
-    public void print(ActionEvent actionEvent) {
-
-
-    }
 
     public void solve(ActionEvent actionEvent) {
         if (wascreated == false) {
@@ -251,47 +216,20 @@ public class Controller {
     }
 
     public void pdfCreate(ActionEvent actionEvent) throws DocumentException, IOException {
-        PrinterJob job=PrinterJob.createPrinterJob();
-        job.printPage(panelBoard);
-        job.showPageSetupDialog(new Stage());
-        job.showPrintDialog(new Stage());
-        com.itextpdf.text.Document document=new com.itextpdf.text.Document();
-        FileOutputStream byteArrayOutputStream=new FileOutputStream("C:\\Users\\Adrian\\Desktop\\1.pdf");
-        com.itextpdf.text.pdf.PdfWriter.getInstance(document,byteArrayOutputStream);
-        document.add((Element)panelBoard);
-        document.close();
-        File file=new File("C:\\Users\\Adrian\\Desktop\\1.pdf");
-        Desktop.getDesktop().open(file);
-        PDDocument document1=PDDocument.load(file);
-
-
-
-       /* com.itextpdf.text.Document document=new com.itextpdf.text.Document();
-        File file=new File("C:\\Users\\Adrian\\Desktop\\2.PDFConverter");
-        ByteArrayOutputStream byteArrayOutputStream=new ByteArrayOutputStream();
-        PdfWriter.getInstance(document,file);
-        com.itextpdf.text.PDFConverter.PdfWriter.getInstance(document,byteArrayOutputStream);
-        document.open();
-        document.add(new Paragraph("chu"));
-        document.add()
-        document.close();
-        Desktop.getDesktop().open(file);*/
-       /*ObservableSet<Printer> printer=Printer.getAllPrinters();
-        PrinterJob job = PrinterJob.createPrinterJob(Printer.getDefaultPrinter());
-        PageLayout pageLayout=new PageLayout(Paper.A4,PageOrientation.LANDSCAPE);
-        job.printPage(pageLayout,panelBoard);
-        Stage stage=new Stage();
-        stage.setTitle("siemka");
-        job.showPrintDialog(stage);
-        System.out.println("chuju ");*/
-      /*  Printer printer = Printer.getDefaultPrinter();
-        PageLayout pageLayout = printer.createPageLayout(Paper.A4, PageOrientation.LANDSCAPE,
-                Printer.MarginType.HARDWARE_MINIMUM);
-        PrinterJob job = PrinterJob.createPrinterJob(Printer.getDefaultPrinter());
-        boolean b1=job.printPage(pageLayout,panelBoard);
-        boolean b2=job.printPage();
-        System.out.println(b1+"chuj"+b2);*/
-
+        if (wascreated == false) {
+            showAlert("Brak krzyżówki do stworzenie PDF", "Stwórz lub otwórz krzyżówkę aby zapisać PDF");
+            return;
+        }
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF", "*.pdf");
+        fileChooser.getExtensionFilters().add(extFilter);
+        File file = fileChooser.showSaveDialog(new Stage());
+        if (file == null) {
+            return;
+        }
+        PDFConverter pdfConverter = new PDFConverter();
+        System.out.println(file.getPath());
+        pdfConverter.creatCrossword(file, this.board);
 
 
     }

@@ -1,6 +1,6 @@
 package Crossword.dictionary;
 
-import Crossword.excetion.FileWithEntryException;
+import Crossword.exception.FileWithEntryException;
 
 import java.io.*;
 import java.util.LinkedList;
@@ -14,12 +14,6 @@ public class CwDB {
 
     }
 
-    /**
-     * Tworzenie nowego obiektu i dodawanie go (haslo i klucz)
-     *
-     * @param word haslo
-     * @param clue klucz
-     */
     public void add(String word, String clue) {
         Entry tmp = new Entry(word, clue);
         this.dict.addFirst(new Entry(word, clue));
@@ -40,20 +34,14 @@ public class CwDB {
         return 1;
     }
 
-    /**
-     * Tworzenie bazy pytań i haseł na podstawie pliku txt
-     *
-     * @param filename ścieżka do pliku
-     * @throws IOException
-     */
     protected void createDB(String filename) throws IOException, FileWithEntryException {
         BufferedReader br = new BufferedReader(new FileReader(filename));
         String tmp = br.readLine();
         do {
             String word = tmp;
             String clue = br.readLine();
-            String[] parts=word.split(" ");
-            if(parts.length>1){
+            String[] parts = word.split(" ");
+            if (parts.length > 1) {
                 throw new FileWithEntryException();
             }
             add(word, clue);

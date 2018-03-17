@@ -2,9 +2,7 @@ package Crossword.board;
 
 import Crossword.dictionary.Entry;
 import Crossword.dictionary.InteliCwDB;
-import Crossword.excetion.FileWithEntryException;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
+import Crossword.exception.FileWithEntryException;
 
 import java.io.*;
 import java.util.LinkedList;
@@ -23,50 +21,23 @@ public class Board implements Serializable {
         this.y = y;
     }
 
-    /**
-     * metoda do dalszeo rozwoju
-     *
-     * @return
-     */
     public int getWidth() {
         return this.x;
     }
 
-    /**
-     * metoda do dalszeo rozwoju
-     *
-     * @return
-     */
     public int getHeight() {
         return this.y;
     }
 
-    /**
-     * metoda do dalszeo rozwoju
-     *
-     * @return
-     */
     public String getCell(int x, int y) {
         return board[x][y];
     }
 
-    /**
-     * metoda ustawia komórkę
-     *
-     * @return
-     */
+
     public void setCell(int x, int y, String c) {
         board[x][y] = c;
     }
 
-    /**
-     * Metoda budująca planszę krzyżówki, zepewnia całą logikę krzyżówki
-     * Pierwsza iteracja po kolumnach krzyżówki, następnie po wierszach
-     * podczas dugirj iteracji dopasowywane są hasła, do wolnych miejsc planszy
-     * Wykorzystuje metody z klasy InteliCwDb, do znajdowanie haseł
-     *
-     * @throws IOException
-     */
     public void createBoard(File file) throws IOException, FileWithEntryException {
         InteliCwDB inteliCwDB = new InteliCwDB(file.getAbsolutePath());
         int cluenumber = 0;
@@ -113,14 +84,7 @@ public class Board implements Serializable {
 
     }
 
-    /**
-     * Wstawianie hasła poziomwego do krzyżówki
-     *
-     * @param tab    tablicach charów
-     * @param x      od
-     * @param y      do na planszy
-     * @param number numer hasła
-     */
+
     public void insertWordVer(char[] tab, int x, int y, int number) {
         int i = 1;
         setCell(x, y, String.valueOf(number + "."));
@@ -131,14 +95,6 @@ public class Board implements Serializable {
 
     }
 
-    /**
-     * Tworzenie wyrażenia regularnego pasującego do planszy krzyżowki, gdzie wstawiamy hasło
-     *
-     * @param fromy od
-     * @param toy   do
-     * @param x     numer wiersza
-     * @return wzorzec
-     */
     String createPattern(int fromy, int toy, int x) {
         String tmp = "^";
         for (int i = fromy + 1; i < toy - fromy; i++) {

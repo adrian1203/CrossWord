@@ -1,4 +1,4 @@
-package Crossword.excetion;
+package Crossword.exception;
 
 public class FileWithEntryException extends Exception {
 

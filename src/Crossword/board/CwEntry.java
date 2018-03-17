@@ -4,9 +4,6 @@ import Crossword.dictionary.Entry;
 
 import java.util.Enumeration;
 
-/**
- * Klasa i jej metody do dlaszego rozwoju ;)
- */
 public class CwEntry extends Entry {
     CwEntry(String word, String clue, int x, int y, Dircetion direction) {
         super(word, clue);
