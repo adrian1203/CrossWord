@@ -81,13 +81,13 @@ public class Controller {
                 label.setPrefWidth(25);
                 label.setPrefHeight(25);
                 if (board.board[i][j] == null) {
-                    label.setStyle("-fx-background-color: darkgray");
+                    label.setStyle("-fx-background-color: #888c5d");
                 } else {
                     if (board.board[i][j].matches("\\d.*")) {
-                        label.setStyle("-fx-border-color: darkgray;-fx-background-color: yellow;-fx-text-alignment: center");
+                        label.setStyle("-fx-border-color: #888c5d;-fx-background-color: yellow;-fx-text-alignment: center");
                         label.setText(" " + board.board[i][j]);
                     } else {
-                        label.setStyle("-fx-border-color: darkgray;-fx-background-color: royalblue;-fx-text-alignment: center");
+                        label.setStyle("-fx-border-color: #888c5d;-fx-background-color: #7bdcf2;-fx-text-alignment: center");
                         label.setText("  ");
                     }
                 }
