@@ -99,8 +99,6 @@ public class Controller {
                 for (String x : board.clue) {
                     list.add(number + ". " + x);
                     number++;
-
-
                 }
                 ObservableList<String> itms = FXCollections.observableArrayList(list);
                 listbooks.setVisible(true);
